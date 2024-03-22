@@ -12,7 +12,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     @Column(unique = true, length = 30)
     private String email;
@@ -42,6 +42,12 @@ public class User {
         user.imgs = imgs;
         user.city = city;
 
-        return user.Id;
+        return user.id;
+    }
+
+    public User setEncodedPassword(User user, String password){
+        user.password = password;
+
+        return user;
     }
 }
