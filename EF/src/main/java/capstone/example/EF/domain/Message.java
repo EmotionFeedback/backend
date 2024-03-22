@@ -15,7 +15,7 @@ public class Message {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
-    private Long roomId;
+    private ChatRoom chatRoom;
 
     private String content;
 
@@ -23,10 +23,10 @@ public class Message {
 
     protected Message(){}
 
-    public static Message createMessage(Long roomId, String content, LocalDateTime sendingTime) {
+    public static Message createMessage(ChatRoom room, String content, LocalDateTime sendingTime) {
         Message message = new Message();
 
-        message.roomId = roomId;
+        message.chatRoom = room;
         message.content = content;
         message.sendingTime = sendingTime;
 

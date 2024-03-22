@@ -13,18 +13,18 @@ public class ChatRoom {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "send_user_id")
-    private Long sendUserId;
+    private User sendUser;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receive_user_id")
-    private Long receiveUserId;
+    private User receiveUser;
 
     protected ChatRoom(){}
 
-    public static ChatRoom craeteChatRoom(Long sendUserId, Long receiveUserId) {
+    public static ChatRoom craeteChatRoom(User sendUser, User receiveUser) {
         ChatRoom chatRoom = new ChatRoom();
 
-        chatRoom.sendUserId = sendUserId;
-        chatRoom.receiveUserId = receiveUserId;
+        chatRoom.sendUser = sendUser;
+        chatRoom.receiveUser = receiveUser;
 
         return chatRoom;
     }

@@ -13,19 +13,19 @@ public class LiveRoom {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "male_user_id")
-    private Long maleUserId;
+    private User maleUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "female_user_id")
-    private Long femaleUserId;
+    private User femaleUser;
 
     protected LiveRoom(){}
 
-    public static LiveRoom createLiveRoom(Long id, Long maleUserId, Long femaleUserId) {
+    public static LiveRoom createLiveRoom(User maleUser, User femaleUser) {
         LiveRoom liveRoom = new LiveRoom();
-        liveRoom.id = id;
-        liveRoom.maleUserId = maleUserId;
-        liveRoom.femaleUserId = femaleUserId;
+
+        liveRoom.maleUser = maleUser;
+        liveRoom.femaleUser = femaleUser;
 
         return liveRoom;
     }

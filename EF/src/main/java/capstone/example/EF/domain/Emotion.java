@@ -13,10 +13,10 @@ public class Emotion {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "male_user_id")
-    private Long maleId;
+    private User male;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "female_user_id")
-    private Long femaleId;
+    private User female;
 
     private int maleEmotion;
 
@@ -24,11 +24,11 @@ public class Emotion {
 
     protected Emotion(){}
 
-    public static Emotion createEmotion(Long maleId, Long femaleId, int maleEmotion, int femaleEmotion) {
+    public static Emotion createEmotion(User male, User female, int maleEmotion, int femaleEmotion) {
         Emotion emotion = new Emotion();
 
-        emotion.maleId = maleId;
-        emotion.femaleId = femaleId;
+        emotion.male = male;
+        emotion.female = female;
         emotion.maleEmotion = maleEmotion;
         emotion.femaleEmotion = femaleEmotion;
 
