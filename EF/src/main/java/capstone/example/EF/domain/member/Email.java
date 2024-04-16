@@ -1,4 +1,4 @@
-package capstone.example.EF.domain;
+package capstone.example.EF.domain.member;
 
 import capstone.example.EF.exception.UserException;
 import jakarta.persistence.Column;

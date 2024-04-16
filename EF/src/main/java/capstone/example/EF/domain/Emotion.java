@@ -1,5 +1,6 @@
 package capstone.example.EF.domain;
 
+import capstone.example.EF.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -12,11 +13,11 @@ public class Emotion {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "male_user_id")
-    private User male;
+    @JoinColumn(name = "male_id")
+    private Member male;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "female_user_id")
-    private User female;
+    @JoinColumn(name = "female_id")
+    private Member female;
 
     private int maleEmotion;
 
@@ -24,7 +25,7 @@ public class Emotion {
 
     protected Emotion(){}
 
-    public static Emotion createEmotion(User male, User female, int maleEmotion, int femaleEmotion) {
+    public static Emotion createEmotion(Member male, Member female, int maleEmotion, int femaleEmotion) {
         Emotion emotion = new Emotion();
 
         emotion.male = male;
