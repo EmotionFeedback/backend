@@ -41,10 +41,4 @@ public class LiveRoom {
         return liveRoom;
     }
 
-    public LiveRoom changeChild(LiveEmotion le, Content ct){
-        this.liveEmotions.add(le);
-        this.contents.add(ct);
-
-        return this;
-    }
 }

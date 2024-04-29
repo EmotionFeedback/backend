@@ -11,22 +11,15 @@ public class Subject {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_connect_id")
-    private SubjectConnect sjConnect;
-
     @Column(length = 255)
     private String subject;
 
     protected Subject(){}
 
-    public static Subject createSubject(SubjectConnect sjConnect, String subject){
+    public static Subject createSubject(String subject){
 
         Subject sj = new Subject();
-        sj.sjConnect = sjConnect;
         sj.subject = subject;
-
-        sjConnect.getSubjects().add(sj);
 
         return sj;
 

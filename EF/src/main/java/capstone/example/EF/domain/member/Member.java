@@ -1,5 +1,6 @@
 package capstone.example.EF.domain.member;
 
+import capstone.example.EF.domain.subject.SubjectCheck;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -15,7 +16,7 @@ public class Member {
     private Long id;
 
     @Embedded
-    private String email;
+    private Email email;
 
     @Column(unique = true)
     private String password;
@@ -29,9 +30,12 @@ public class Member {
     @OneToMany(mappedBy = "member")
     List<Hobby> hobbies = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    List<SubjectCheck> checkers = new ArrayList<>();
+
     protected Member(){}
 
-    public static Member createMember(String email, String password, int age, byte[] imgs, String city,Mbti mbti, String job) {
+    public static Member createMember(Email email, String password, int age, byte[] imgs, String city,Mbti mbti, String job) {
 
         Member member = new Member();
 

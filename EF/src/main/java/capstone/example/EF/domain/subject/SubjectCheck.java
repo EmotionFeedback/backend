@@ -1,5 +1,6 @@
 package capstone.example.EF.domain.subject;
 
+import capstone.example.EF.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -12,19 +13,19 @@ public class SubjectCheck {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subjectConnect")
-    private SubjectConnect sjConnect;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    private Long check;
+    private Long checker;
 
     protected SubjectCheck(){}
 
-    public static SubjectCheck createSubjectCheck(SubjectConnect sbjConnect, Long check){
+    public static SubjectCheck createSubjectCheck(Member member, Long checker){
         SubjectCheck sjCheck = new SubjectCheck();
-        sjCheck.sjConnect = sbjConnect;
-        sjCheck.check = check;
+        sjCheck.member = member;
+        sjCheck.checker = checker;
 
-        sbjConnect.getCheckers().add(sjCheck);
+        member.getCheckers().add(sjCheck);
         return sjCheck;
     }
 }

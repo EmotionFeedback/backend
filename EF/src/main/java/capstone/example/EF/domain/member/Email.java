@@ -1,6 +1,6 @@
 package capstone.example.EF.domain.member;
 
-import capstone.example.EF.exception.UserException;
+import capstone.example.EF.exception.CustomException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
@@ -21,6 +21,8 @@ public class Email {
     @Column(name = "email", nullable = false, unique = true,updatable = false)
     private String value;
 
+    protected Email (){}
+
     private Email(String value){
         this.value = value;
     }
@@ -32,7 +34,7 @@ public class Email {
 
     private static void validateEmailPattern(String value) {
         if (isNotValidPattern(value)) {
-            throw new UserException("이메일 형식에 맞지 않습니다!");
+            throw new CustomException("이메일 형식에 맞지 않습니다!");
         }
     }
 

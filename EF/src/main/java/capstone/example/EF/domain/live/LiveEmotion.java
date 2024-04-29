@@ -19,9 +19,12 @@ public class LiveEmotion {
 
     protected LiveEmotion(){}
 
-    public static LiveEmotion createLiveEmotion(int liveEmotion){
+    public static LiveEmotion createLiveEmotion(LiveRoom liveRoom, int liveEmotion){
         LiveEmotion le = new LiveEmotion();
         le.liveEmotion = liveEmotion;
+        le.liveRoom = liveRoom;
+
+        liveRoom.getLiveEmotions().add(le);
         return le;
     }
 

@@ -19,9 +19,12 @@ public class Content {
 
     protected Content(){}
 
-    public static Content createContent(String content){
+    public static Content createContent(LiveRoom liveRoom, String content){
         Content ct = new Content();
         ct.content = content;
+        ct.liveRoom = liveRoom;
+
+        liveRoom.getContents().add(ct);
 
         return ct;
     }
