@@ -48,7 +48,18 @@ public class LiveService {
             return true;
         }
         else{
-            throw new CustomException("해당 id가 존재하지 않습니다.");
+            throw new CustomException("해당 liveRoomId가 존재하지 않습니다.");
+        }
+    }
+
+    public LiveRoom findByLiveRoomId(Long liveRoomId){
+        if(liveRoomRepository.existsById(liveRoomId)) {
+            Optional<LiveRoom> byId = liveRoomRepository.findById(liveRoomId);
+            LiveRoom room = byId.get();
+            return room;
+        }
+        else{
+            throw new CustomException("해당 liveRoomId가 존재하지 않습니다.");
         }
     }
 
@@ -66,7 +77,7 @@ public class LiveService {
             return mean;
         }
         else{
-            throw new CustomException("해당 room Id가 존재하지 않습니다.");
+            throw new CustomException("해당 liveRoomId가 존재하지 않습니다.");
         }
     }
 }
