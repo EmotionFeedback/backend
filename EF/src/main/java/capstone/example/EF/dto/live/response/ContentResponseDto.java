@@ -1,4 +1,4 @@
-package capstone.example.EF.dto.live;
+package capstone.example.EF.dto.live.response;
 
 
 import capstone.example.EF.domain.live.LiveRoom;

@@ -40,6 +40,11 @@ public class MemberService {
         return true;
     }
 
+    @Transactional
+    public void updateCallingPoint(Member member, Integer callingPoint){
+        member.updateCallingPoint(callingPoint);
+    }
+
     public Member findById(Long id){
         Member member = userRepository.findById(id).orElseThrow(() -> new CustomException("해당 id가 존재하지 않습니다."));
         return member;

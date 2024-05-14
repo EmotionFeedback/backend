@@ -63,21 +63,4 @@ public class LiveService {
         }
     }
 
-    public Long calculateMean(Long liveRoomId){
-        if(liveRoomRepository.existsById(liveRoomId)){
-            Optional<LiveRoom> byId = liveRoomRepository.findById(liveRoomId);
-            LiveRoom room = byId.get();
-            List<LiveEmotion> liveEmotions = room.getLiveEmotions();
-            Long mean = 0L;
-            Long sum = 0L;
-            for (LiveEmotion liveEmotion : liveEmotions) {
-                sum += liveEmotion.getLiveEmotion();
-            }
-            mean = sum / liveEmotions.size();
-            return mean;
-        }
-        else{
-            throw new CustomException("해당 liveRoomId가 존재하지 않습니다.");
-        }
-    }
 }

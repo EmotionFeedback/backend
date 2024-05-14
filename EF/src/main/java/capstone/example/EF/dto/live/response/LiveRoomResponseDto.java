@@ -1,4 +1,4 @@
-package capstone.example.EF.dto.live;
+package capstone.example.EF.dto.live.response;
 
 import capstone.example.EF.domain.live.LiveRoom;
 import capstone.example.EF.domain.member.Member;
@@ -16,6 +16,6 @@ public class LiveRoomResponseDto {
     public LiveRoomResponseDto(LiveRoom liveRoom, Member male, Member female){
         this.liveRoomId = liveRoom.getId();
         this.maleId = male.getId();
-        this.femaleId = getFemaleId();
+        this.femaleId = female.getId();
     }
 }

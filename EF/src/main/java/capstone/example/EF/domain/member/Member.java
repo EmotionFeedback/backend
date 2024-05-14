@@ -33,6 +33,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     List<SubjectCheck> checkers = new ArrayList<>();
 
+    private int callingPoint;
+
     protected Member(){}
 
     public static Member createMember(Email email, String password, int age, byte[] imgs, String city,Mbti mbti, String job) {
@@ -46,6 +48,7 @@ public class Member {
         member.city = city;
         member.mbti = mbti;
         member.job = job;
+        member.callingPoint = 1;
 
         return member;
     }
@@ -58,6 +61,10 @@ public class Member {
         member.job = job;
 
         return member.id;
+    }
+
+    public void updateCallingPoint(Integer i){
+        this.callingPoint = i;
     }
 
 }

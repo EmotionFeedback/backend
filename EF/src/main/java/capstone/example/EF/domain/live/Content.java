@@ -16,13 +16,15 @@ public class Content {
     private LiveRoom liveRoom;
 
     private String content;
+    private Long memberId;
 
     protected Content(){}
 
-    public static Content createContent(LiveRoom liveRoom, String content){
+    public static Content createContent(LiveRoom liveRoom, String content,Long memberId){
         Content ct = new Content();
         ct.content = content;
         ct.liveRoom = liveRoom;
+        ct.memberId = memberId;
 
         liveRoom.getContents().add(ct);
 
