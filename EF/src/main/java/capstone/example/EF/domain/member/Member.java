@@ -1,6 +1,7 @@
 package capstone.example.EF.domain.member;
 
 import capstone.example.EF.domain.subject.SubjectCheck;
+import capstone.example.EF.dto.member.UpdateMemberDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -53,14 +54,29 @@ public class Member {
         return member;
     }
 
-    public Long updateUserInfo (Member member, int age, byte[] imgs, String city, Mbti mbti, String job){
+    public static Member createNonePasswordMember(Email email, int age, byte[] imgs, String city,Mbti mbti, String job) {
+
+        Member member = new Member();
+
+        member.email = email;
         member.age = age;
         member.imgs = imgs;
         member.city = city;
         member.mbti = mbti;
         member.job = job;
+        member.callingPoint = 1;
 
-        return member.id;
+        return member;
+    }
+
+    public Member updateUserInfo (UpdateMemberDto updateMemberDto){
+        this.age = updateMemberDto.getAge();
+        this.imgs = updateMemberDto.getImgs();
+        this.city = updateMemberDto.getCity();
+        this.mbti = updateMemberDto.getMbti();
+        this.job = updateMemberDto.getJob();
+
+        return this;
     }
 
     public void updateCallingPoint(Integer i){
