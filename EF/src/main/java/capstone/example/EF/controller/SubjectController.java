@@ -13,6 +13,9 @@ import capstone.example.EF.dto.subject.response.ScenarioSubjectResponseDto;
 import capstone.example.EF.service.LiveService;
 import capstone.example.EF.service.MemberService;
 import capstone.example.EF.service.SubjectService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Tag(name = "주제추천")
 @RestController
 @RequiredArgsConstructor
 public class SubjectController {
@@ -29,8 +33,9 @@ public class SubjectController {
     private final MemberService memberService;
     private final LiveService liveService;
 
+    @Operation(description = "프로필 기반 주제추천")
     @GetMapping("/subject/{id}/profile")
-    public ProfileSubjectResponseDto suggestProfileSubject(@PathVariable("id") Long opponentId){
+    public ProfileSubjectResponseDto suggestProfileSubject(@Parameter(description = "유저 id") @PathVariable("id") Long opponentId){
         Member byId = memberService.findById(opponentId);
         String url = "http://localhost:8080/test";
 
@@ -40,8 +45,9 @@ public class SubjectController {
 
     }
 
+    @Operation(description = "대화내용 기반 주제추천")
     @GetMapping("/subject/{room-id}/{user-id}/scenario")
-    public ScenarioSubjectResponseDto suggestScenarioSubject(@PathVariable("room-id") Long liveRoomId, @PathVariable("user-id") Long selfId){
+    public ScenarioSubjectResponseDto suggestScenarioSubject(@Parameter(description = "화상채팅방 id") @PathVariable("room-id") Long liveRoomId, @Parameter(description = "유저 id") @PathVariable("user-id") Long selfId){
         LiveRoom byLiveRoomId = liveService.findByLiveRoomId(liveRoomId);
         Member byId = memberService.findById(selfId);
         List<String> content = new ArrayList<>();
@@ -90,21 +96,21 @@ public class SubjectController {
 //        return hobbies;
 //    }
 
-    @PostMapping("/test2")
-    public List<String> test(@RequestBody ProfileSubjectRequestDtoTest dto){
-        List<String> hobbies = dto.getContent();
-        hobbies.add(dto.getImageL().toString());
-        hobbies.add(dto.getVoiceL().toString());
+//    @PostMapping("/test2")
+//    public List<String> test(@RequestBody ProfileSubjectRequestDtoTest dto){
+//        List<String> hobbies = dto.getContent();
+//        hobbies.add(dto.getImageL().toString());
+//        hobbies.add(dto.getVoiceL().toString());
+//
+//        return hobbies;
+//    }
 
-        return hobbies;
-    }
-
-    @PostMapping("/hobby/{id}")
-    public void saveHobby(@PathVariable("id") Long id, @RequestBody ContentRequestDto dto){
-        Member byId = memberService.findById(id);
-        Hobby hobby = Hobby.createHobby(dto.getContent(), byId);
-        memberService.hobbyJoin(hobby);
-    }
+//    @PostMapping("/hobby/{id}")
+//    public void saveHobby(@PathVariable("id") Long id, @RequestBody ContentRequestDto dto){
+//        Member byId = memberService.findById(id);
+//        Hobby hobby = Hobby.createHobby(dto.getContent(), byId);
+//        memberService.hobbyJoin(hobby);
+//    }
 
 
 }

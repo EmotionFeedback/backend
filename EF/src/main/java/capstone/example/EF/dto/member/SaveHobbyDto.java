@@ -5,13 +5,12 @@ import capstone.example.EF.domain.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class SaveHobbyDto {
 
-    private String hobby;
+    private List<String> hobby;
 
-    public Hobby toEntity(Member member){
-        return Hobby.createHobby(hobby,member);
-    }
 }
