@@ -14,6 +14,7 @@ public class MemberDto {
 
     private Long id;
     private String email;
+    private String nickname;
     private int age;
     private byte[] image;
     private String city;
@@ -24,6 +25,7 @@ public class MemberDto {
         return MemberDto.builder()
                 .id(member.getId())
                 .email(member.getEmail().getValue())
+                .nickname(member.getNickname())
                 .age(member.getAge())
                 .image(member.getImgs())
                 .city(member.getCity())
@@ -33,6 +35,6 @@ public class MemberDto {
     }
 
     public Member toEntity() {
-        return Member.createNonePasswordMember(Email.from(email), age, image, city,mbti, job);
+        return Member.createNonePasswordMember(Email.from(email),nickname, age, image, city,mbti, job);
     }
 }

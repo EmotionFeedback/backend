@@ -20,6 +20,7 @@ public class SignUpDto {
 
     private String email;
     private String password;
+    private String nickname;
     private int age;
     private byte[] image;
     private String city;
@@ -28,6 +29,6 @@ public class SignUpDto {
 
     public Member toEntity(String encodedPassword) {
 
-        return Member.createMember(Email.from(email), encodedPassword,age,image,city,mbti,job);
+        return Member.createMember(Email.from(email), encodedPassword,nickname,age,image,city,mbti,job);
     }
 }

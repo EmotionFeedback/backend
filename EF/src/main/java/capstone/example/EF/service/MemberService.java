@@ -10,6 +10,7 @@ import capstone.example.EF.dto.member.UpdateMemberDto;
 import capstone.example.EF.exception.CustomException;
 import capstone.example.EF.repository.member.HobbyRepository;
 import capstone.example.EF.repository.member.MemberRepository;
+import capstone.example.EF.repository.subject.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +30,7 @@ public class MemberService {
 
     private final MemberRepository userRepository;
     private final HobbyRepository hobbyRepository;
+    private final SubjectRepository subjectRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -53,6 +55,7 @@ public class MemberService {
         }
         else{
             Member member = byId.get();
+
             userRepository.delete(member);
             return true;
         }

@@ -8,8 +8,9 @@ import lombok.Getter;
 public class ContentRequestDto {
 
     private String content;
+    private Integer millisec;
 
     public static Content toEntity(LiveRoom liveRoom, ContentRequestDto contentRequestDto, Long memberId) {
-        return Content.createContent(liveRoom,contentRequestDto.getContent(),memberId);
+        return Content.createContent(liveRoom,contentRequestDto.getContent(),memberId, contentRequestDto.getMillisec());
     }
 }

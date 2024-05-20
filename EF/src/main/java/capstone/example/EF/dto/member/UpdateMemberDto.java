@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UpdateMemberDto {
+
+    private String nickname;
     private int age;
     private byte[] imgs;
     private String city;

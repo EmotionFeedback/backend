@@ -69,14 +69,16 @@ public class LiveController {
         LiveRoom room = liveService.findByLiveRoomId(liveRoomId);
         List<Content> contents = room.getContents();
         List<String> re = new ArrayList<>();
+        List<Integer> millisec = new ArrayList<>();
 
         for (Content content : contents) {
             if(Objects.equals(content.getMemberId(), memberId)) {
                 re.add(content.getContent());
+                millisec.add(content.getMillisec());
             }
         }
 
-        return new ContentResponseDto(room,re);
+        return new ContentResponseDto(room,re,millisec);
     }
     @Operation(summary = "현재까지 모든 감정 조회, 해당 회원의 감정이 아닌 해당 회원의 상대방의 감정이 반환됨")
     @GetMapping("/live/{room-id}/{user-id}/all-emotion")

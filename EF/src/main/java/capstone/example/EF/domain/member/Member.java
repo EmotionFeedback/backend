@@ -21,6 +21,8 @@ public class Member {
 
     @Column(unique = true)
     private String password;
+
+    private String nickname;
     private int age;
     private byte[] imgs;
     private String city;
@@ -28,22 +30,23 @@ public class Member {
     private Mbti mbti;
     private String job;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     List<Hobby> hobbies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     List<SubjectCheck> checkers = new ArrayList<>();
 
     private int callingPoint;
 
     protected Member(){}
 
-    public static Member createMember(Email email, String password, int age, byte[] imgs, String city,Mbti mbti, String job) {
+    public static Member createMember(Email email, String password, String nickname, int age, byte[] imgs, String city,Mbti mbti, String job) {
 
         Member member = new Member();
 
         member.email = email;
         member.password = password;
+        member.nickname = nickname;
         member.age = age;
         member.imgs = imgs;
         member.city = city;
@@ -54,12 +57,13 @@ public class Member {
         return member;
     }
 
-    public static Member createNonePasswordMember(Email email, int age, byte[] imgs, String city,Mbti mbti, String job) {
+    public static Member createNonePasswordMember(Email email, String nickname, int age, byte[] imgs, String city,Mbti mbti, String job) {
 
         Member member = new Member();
 
         member.email = email;
         member.age = age;
+        member.nickname = nickname;
         member.imgs = imgs;
         member.city = city;
         member.mbti = mbti;
@@ -70,6 +74,7 @@ public class Member {
     }
 
     public Member updateUserInfo (UpdateMemberDto updateMemberDto){
+        this.nickname = updateMemberDto.getNickname();
         this.age = updateMemberDto.getAge();
         this.imgs = updateMemberDto.getImgs();
         this.city = updateMemberDto.getCity();
