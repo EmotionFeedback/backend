@@ -6,7 +6,6 @@ import capstone.example.EF.domain.member.Hobby;
 import capstone.example.EF.domain.member.Member;
 import capstone.example.EF.dto.live.request.ContentRequestDto;
 import capstone.example.EF.dto.subject.request.ProfileSubjectRequestDto;
-import capstone.example.EF.dto.subject.request.ProfileSubjectRequestDtoTest;
 import capstone.example.EF.dto.subject.request.ScenarioSubjectRequestDto;
 import capstone.example.EF.dto.subject.response.ProfileSubjectResponseDto;
 import capstone.example.EF.dto.subject.response.ScenarioSubjectResponseDto;
