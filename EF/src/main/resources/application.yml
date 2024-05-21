@@ -1,17 +1,4 @@
-spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://database-emotion-feedback.czyqweykwib4.ap-northeast-2.rds.amazonaws.com:5432/emotionFeedback
-    username: jach1206
-    password: iuoo856963
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        #      show_sql: true
-        format_sql: true
 
 logging.level:
   org.hibernate.SQL: debug
