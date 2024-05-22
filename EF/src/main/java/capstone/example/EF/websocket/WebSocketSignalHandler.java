@@ -14,7 +14,7 @@ import java.util.*;
 
 @Slf4j
 @Component
-public class SignalHandler extends TextWebSocketHandler {
+public class WebSocketSignalHandler extends TextWebSocketHandler {
 
     private final SessionRepository sessionRepositoryRepo = SessionRepository.getInstance();
     private final ObjectMapper objectMapper = new ObjectMapper();
