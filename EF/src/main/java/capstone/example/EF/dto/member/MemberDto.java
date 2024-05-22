@@ -1,6 +1,7 @@
 package capstone.example.EF.dto.member;
 
 import capstone.example.EF.domain.member.Email;
+import capstone.example.EF.domain.member.Hobby;
 import capstone.example.EF.domain.member.Mbti;
 import capstone.example.EF.domain.member.Member;
 import lombok.*;
@@ -15,6 +16,8 @@ public class MemberDto {
     private Long id;
     private String email;
     private String nickname;
+    private String sex;
+    private String hobby;
     private int age;
     private byte[] image;
     private String city;
@@ -26,6 +29,8 @@ public class MemberDto {
                 .id(member.getId())
                 .email(member.getEmail().getValue())
                 .nickname(member.getNickname())
+                .sex(member.getSex())
+                .hobby(member.getHobbies().get(0).getHobby())
                 .age(member.getAge())
                 .image(member.getImgs())
                 .city(member.getCity())
@@ -35,6 +40,6 @@ public class MemberDto {
     }
 
     public Member toEntity() {
-        return Member.createNonePasswordMember(Email.from(email),nickname, age, image, city,mbti, job);
+        return Member.createNonePasswordMember(Email.from(email),nickname,sex, age,image, city,mbti, job);
     }
 }

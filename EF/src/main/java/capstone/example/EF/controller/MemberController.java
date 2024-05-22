@@ -36,11 +36,12 @@ public class MemberController {
         log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
         return jwtToken;
     }
-    @Operation(summary = "회원가입, 취미를 제외한 정보를 전달해줌, 취미는 회원가입 이후 전달")
+    @Operation(summary = "회원가입, 취미도 그냥 String으로 주쇼!")
     @PostMapping("/sign-up")
     public ResponseEntity<MemberDto> signUp(@Parameter(description = "회원가입할 유저 정보") @RequestBody SignUpDto signUpDto) {
         Member savedMember = memberService.signUp(signUpDto);
         subjectService.createChecker(savedMember);
+        memberService.hobbyJoin(Hobby.createHobby(signUpDto.getHobby(),savedMember));
 
         return ResponseEntity.ok(MemberDto.toDto(savedMember));
     }
@@ -55,6 +56,7 @@ public class MemberController {
 
         return true;
     }
+
     @Operation(summary = "유저 정보 조회")
     @GetMapping("/{id}")
     public MemberDto getMember(@Parameter(description = "유저 id") @PathVariable("id") Long id){

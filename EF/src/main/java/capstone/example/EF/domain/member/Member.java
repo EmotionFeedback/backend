@@ -23,6 +23,7 @@ public class Member {
     private String password;
 
     private String nickname;
+    private String sex;
     private int age;
     private byte[] imgs;
     private String city;
@@ -40,13 +41,14 @@ public class Member {
 
     protected Member(){}
 
-    public static Member createMember(Email email, String password, String nickname, int age, byte[] imgs, String city,Mbti mbti, String job) {
+    public static Member createMember(Email email, String password, String nickname, String sex, int age, byte[] imgs, String city,Mbti mbti, String job) {
 
         Member member = new Member();
 
         member.email = email;
         member.password = password;
         member.nickname = nickname;
+        member.sex = sex;
         member.age = age;
         member.imgs = imgs;
         member.city = city;
@@ -57,13 +59,14 @@ public class Member {
         return member;
     }
 
-    public static Member createNonePasswordMember(Email email, String nickname, int age, byte[] imgs, String city,Mbti mbti, String job) {
+    public static Member createNonePasswordMember(Email email, String nickname, String sex, int age, byte[] imgs, String city,Mbti mbti, String job) {
 
         Member member = new Member();
 
         member.email = email;
         member.age = age;
         member.nickname = nickname;
+        member.sex = sex;
         member.imgs = imgs;
         member.city = city;
         member.mbti = mbti;
