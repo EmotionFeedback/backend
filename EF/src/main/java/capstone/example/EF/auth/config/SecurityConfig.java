@@ -36,6 +36,7 @@ public class SecurityConfig {
                         CorsConfiguration configuration = new CorsConfiguration();
 
                         configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8000"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -57,7 +58,8 @@ public class SecurityConfig {
                 // 해당 API에 대해서는 모든 요청을 허가
                 .requestMatchers("/member/sign-in","member/sign-up").permitAll()
                 .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
-                // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
+                .requestMatchers("/live/*/*/save/content", "/live/*/*/save/emotion"
+                ,"/live/*/*/all-content", "/live/*/*/all-emotion").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
