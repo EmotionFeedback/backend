@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Getter
@@ -24,13 +25,18 @@ public class SignUpDto {
     private String sex;
     private String hobby;
     private int age;
-    private byte[] image;
+    private String image;
     private String city;
     private Mbti mbti;
     private String job;
 
     public Member toEntity(String encodedPassword) {
 
-        return Member.createMember(Email.from(email), encodedPassword,nickname,sex,age,image,city,mbti,job);
+        byte[] imageBytes = null;
+        String base64Image = image.split(",")[1]; // 데이터 URI 스키마 제거
+        imageBytes = Base64.getDecoder().decode(base64Image);
+
+
+            return Member.createMember(Email.from(email), encodedPassword,nickname,sex,age,imageBytes,city,mbti,job);
     }
 }
