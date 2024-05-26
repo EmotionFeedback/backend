@@ -15,8 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -28,26 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
-                .cors((corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-
-                        CorsConfiguration configuration = new CorsConfiguration();
-
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8000"));
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
-                        configuration.setAllowCredentials(true);
-                        configuration.setAllowedHeaders(Collections.singletonList("*"));
-                        configuration.setMaxAge(3600L);
-
-                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-
-                        return configuration;
-                    }
-                })))
-
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource()))
                 // REST API이므로 basic auth 및 csrf 보안을 사용하지 않음
                 .httpBasic().disable()
                 .csrf().disable()
@@ -56,10 +38,10 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 // 해당 API에 대해서는 모든 요청을 허가
-                .requestMatchers("/member/sign-in","member/sign-up").permitAll()
+                .requestMatchers("/member/sign-in", "/member/sign-up").permitAll()
                 .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
-                .requestMatchers("/live/*/*/save/content", "/live/*/*/save/emotion"
-                ,"/live/*/*/all-content", "/live/*/*/all-emotion").permitAll()
+                .requestMatchers("/live/*/*/save/content", "/live/*/*/save/emotion",
+                        "/live/*/*/all-content", "/live/*/*/all-emotion").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
@@ -67,10 +49,23 @@ public class SecurityConfig {
     }
 
     @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8000"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         // BCrypt Encoder 사용
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
-
 }
