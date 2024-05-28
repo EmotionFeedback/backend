@@ -11,17 +11,17 @@ import java.util.List;
 @Setter
 public class ProfileSubjectRequestDto {
 
-    private String job;
-    private List<String> hobbies;
+    private List<String> interests;
 
     public ProfileSubjectRequestDto(String job, List<Hobby> hobby){
 
-        this.job = job;
         List<String> re = new ArrayList<>();
         for (Hobby hobby1 : hobby) {
             re.add(hobby1.getHobby());
         }
 
-        this.hobbies = re;
+        re.add(job);
+
+        this.interests = re;
     }
 }

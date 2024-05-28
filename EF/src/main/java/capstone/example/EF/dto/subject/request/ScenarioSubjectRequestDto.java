@@ -10,16 +10,14 @@ import java.util.List;
 
 @Getter
 public class ScenarioSubjectRequestDto {
-    private List<String> content = new ArrayList<>();
-    private List<Integer> imageL = new ArrayList<>();
-    private List<Integer> voiceL = new ArrayList<>();
+    private List<String> scenarios = new ArrayList<>();
+    private List<Integer> likeabilities = new ArrayList<>();
 
 
     public ScenarioSubjectRequestDto(List<String> content, List<Integer> image, List<Integer> voice,int point){
         for(int i=point-1; i<=point+1 && i<image.size();i++){
-            this.content.add(content.get(i));
-            this.imageL.add(image.get(i));
-            this.voiceL.add(voice.get(i));
+            this.scenarios.add(content.get(i));
+            this.likeabilities.add((image.get(i) + voice.get(i))/2);
         }
     }
 }

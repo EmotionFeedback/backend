@@ -34,9 +34,9 @@ public class SubjectController {
 
     @Operation(description = "프로필 기반 주제추천")
     @GetMapping("/subject/{id}/profile")
-    public ProfileSubjectResponseDto suggestProfileSubject(@Parameter(description = "유저 id") @PathVariable("id") Long opponentId){
+    public ProfileSubjectResponseDto suggestProfileSubject(@Parameter(description = "상대방 유저 id") @PathVariable("id") Long opponentId){
         Member byId = memberService.findById(opponentId);
-        String url = "http://localhost:8080/test";
+        String url = "http://13.209.47.247:8000/byProfile";
 
         List<String> response = CallApi.sendPostRequestToUrlWithHobby(url, new ProfileSubjectRequestDto(byId.getJob(), byId.getHobbies()));
 
@@ -54,7 +54,7 @@ public class SubjectController {
         List<Integer> voice = new ArrayList<>();
         int mean = 0;
 
-        String url = "http://localhost:8080/test2";
+        String url = "http://13.209.47.247:8000/byScenario";
 
         for(int i = 0;i<byLiveRoomId.getContents().size() && i<byLiveRoomId.getLiveEmotions().size();i++) {
             if (Objects.equals(byLiveRoomId.getContents().get(i).getMemberId(), selfId)) {
