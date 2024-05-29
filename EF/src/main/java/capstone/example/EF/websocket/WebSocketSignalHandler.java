@@ -1,5 +1,7 @@
 package capstone.example.EF.websocket;
 
+import capstone.example.EF.websocket.SessionRepository;
+import capstone.example.EF.websocket.WebSocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,7 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
             Long roomId = message.getRoomId();
 
             log.info("======================================== origin message INFO");
-            log.info("==========session.Id : {}, getType : {},  getRoomId :  {}", session.getId(), message.getType(), roomId.toString());
+            log.info("==========session.Id : {}, getType : {},  getRoomId :  {}", session.getId(), message.getType(), roomId);
 
             switch (message.getType()) {
                 case MSG_TYPE_JOIN_ROOM:
@@ -108,6 +110,7 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
                 WebSocketMessage.builder()
                         .type(messageType)
                         .sender(userName)
+                        .roomId(roomId) // roomId를 포함하도록 설정
                         .allUsers(users)
                         .build());
     }
@@ -131,14 +134,16 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
 
     private void sendMessage(WebSocketSession session, WebSocketMessage message) {
         try {
-            String json = objectMapper.writeValueAsString(message);
-            log.info("========== 발송 to : " + session.getId());
-            log.info("========== 발송 내용 : " + json);
-            session.sendMessage(new TextMessage(json));
+            if (session.isOpen()) { // WebSocket 세션이 열려있는지 확인
+                String json = objectMapper.writeValueAsString(message);
+                log.info("========== 발송 to : " + session.getId());
+                log.info("========== 발송 내용 : " + json);
+                session.sendMessage(new TextMessage(json));
+            } else {
+                log.warn("WebSocket session is closed: {}", session.getId());
+            }
         } catch (IOException e) {
             log.error("============== 발생한 에러 메세지: " + e.getMessage());
         }
     }
 }
-
-

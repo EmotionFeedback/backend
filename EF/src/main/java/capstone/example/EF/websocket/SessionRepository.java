@@ -28,8 +28,14 @@ public class SessionRepository {
     }
 
     public void addClient(Long roomId, WebSocketSession session) {
-        rooms.get(roomId).put(session.getId(), session);
+        Map<String, WebSocketSession> clients = rooms.get(roomId);
+        if (clients == null) {
+            clients = new HashMap<>();
+            rooms.put(roomId, clients);
+        }
+        clients.put(session.getId(), session);
         sessionRoomMap.put(session, roomId);
+        System.out.println("Client added to room " + roomId + ": " + session.getId());
     }
 
     public void addClientInNewRoom(Long roomId, WebSocketSession session) {
@@ -37,14 +43,18 @@ public class SessionRepository {
         clients.put(session.getId(), session);
         rooms.put(roomId, clients);
         sessionRoomMap.put(session, roomId);
+        System.out.println("New room created with ID " + roomId + " for client: " + session.getId());
     }
 
     public void saveRoomIdToSession(WebSocketSession session, Long roomId) {
         sessionRoomMap.put(session, roomId);
+        System.out.println("Room ID " + roomId + " saved to session: " + session.getId());
     }
 
     public Long getRoomId(WebSocketSession session) {
-        return sessionRoomMap.get(session);
+        Long roomId = sessionRoomMap.get(session);
+        System.out.println("Room ID retrieved for session " + session.getId() + ": " + roomId);
+        return roomId;
     }
 
     public void deleteClient(Long roomId, WebSocketSession session) {
@@ -53,16 +63,20 @@ public class SessionRepository {
             clients.remove(session.getId());
             if (clients.isEmpty()) {
                 rooms.remove(roomId);
+                System.out.println("Room " + roomId + " removed as it is now empty.");
             }
         }
         sessionRoomMap.remove(session);
+        System.out.println("Client removed from room " + roomId + ": " + session.getId());
     }
 
     public void deleteRoomIdToSession(WebSocketSession session) {
         sessionRoomMap.remove(session);
+        System.out.println("Room ID removed from session: " + session.getId());
     }
 
     public void removeRoom(Long roomId) {
         rooms.remove(roomId);
+        System.out.println("Room " + roomId + " removed.");
     }
 }
