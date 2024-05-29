@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/live/*/*/save/content", "/live/*/*/save/emotion",
                         "/live/*/*/all-content", "/live/*/*/all-emotion").permitAll()
+                .requestMatchers("/signal/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
