@@ -14,8 +14,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(signalHandler(), "/signal")
-                .setAllowedOrigins("*")
-                .withSockJS(); // SockJS를 사용하여 WebSocket을 사용할 수 없는 경우 폴백 지원
+                .setAllowedOrigins("*");
     }
 
     @Bean

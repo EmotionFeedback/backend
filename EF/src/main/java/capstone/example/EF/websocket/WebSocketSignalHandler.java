@@ -26,6 +26,7 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(final WebSocketSession session) {
         log.info("웹소켓 연결됨: {}", session.getId());
+        sessionRepositoryRepo.addClientInNewRoom(0L, session); // 임시 방 ID로 0 사용
     }
 
     @Override

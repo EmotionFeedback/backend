@@ -5,6 +5,10 @@ spring:
     username: jach1206
     password: iuoo856963
 
+  web:
+    websocket:
+      enabled: true  # WebSocket 기능을 활성화합니다.
+
   jpa:
     hibernate:
       ddl-auto: update
