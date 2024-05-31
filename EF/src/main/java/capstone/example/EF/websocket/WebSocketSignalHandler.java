@@ -12,7 +12,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 @Slf4j
 @Component
@@ -85,19 +87,15 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
         if (sessionRepositoryRepo.hasRoom(roomId)) {
             Map<String, WebSocketSession> clientList = sessionRepositoryRepo.getClientList(roomId);
 
-            if (clientList.size() == 2) {
-                for (Map.Entry<String, WebSocketSession> entry : clientList.entrySet()) {
-                    if (!entry.getKey().equals(session.getId())) {
-                        try {
-                            sendMessage(entry.getValue(), message);
-                            log.info("Sent {} message to session: {}", message.getType(), entry.getKey());
-                        } catch (Exception e) {
-                            log.error("Failed to send {} message: {}", message.getType(), e.getMessage());
-                        }
+            for (Map.Entry<String, WebSocketSession> entry : clientList.entrySet()) {
+                if (!entry.getKey().equals(session.getId())) {
+                    try {
+                        sendMessage(entry.getValue(), message);
+                        log.info("Sent {} message to session: {}", message.getType(), entry.getKey());
+                    } catch (Exception e) {
+                        log.error("Failed to send {} message: {}", message.getType(), e.getMessage());
                     }
                 }
-            } else {
-                log.warn("Room {} does not have enough clients to send {} message", roomId, message.getType());
             }
         } else {
             log.warn("Room {} does not exist", roomId);
