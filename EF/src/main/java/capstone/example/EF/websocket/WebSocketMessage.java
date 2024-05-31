@@ -15,16 +15,27 @@ public class WebSocketMessage {
     private Long roomId;
     private String data;
     private List<String> allUsers;
+    private IceCandidate candidate;  // 이 라인 추가
 
     public WebSocketMessage() {
     }
 
-    public WebSocketMessage(String type, String sender, Long roomId, String data, List<String> allUsers) {
+    public WebSocketMessage(String type, String sender, Long roomId, String data, List<String> allUsers, IceCandidate candidate) {
         this.type = type;
         this.sender = sender;
         this.roomId = roomId;
         this.data = data;
         this.allUsers = allUsers;
+        this.candidate = candidate;  // 이 라인 추가
     }
 }
 
+@Getter
+@Setter
+@Builder
+class IceCandidate {
+    private String candidate;
+    private String sdpMid;
+    private int sdpMLineIndex;
+    private String usernameFragment;
+}

@@ -1,7 +1,5 @@
 package capstone.example.EF.websocket;
 
-import capstone.example.EF.websocket.SessionRepository;
-import capstone.example.EF.websocket.WebSocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +10,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -129,9 +127,10 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
             sessionRepositoryRepo.deleteClient(roomId, session);
             sessionRepositoryRepo.deleteRoomIdToSession(session);
 
-            if (sessionRepositoryRepo.getClientList(roomId).isEmpty()) {
+            Map<String, WebSocketSession> clientList = sessionRepositoryRepo.getClientList(roomId);
+            if (clientList != null && clientList.isEmpty()) {
                 sessionRepositoryRepo.removeRoom(roomId);
-            } else {
+            } else if (clientList != null) {
                 notifyOtherUserInRoom(session, roomId, session.getId(), "leave");
             }
         }
