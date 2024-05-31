@@ -35,7 +35,6 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
     protected void handleTextMessage(final WebSocketSession session, final TextMessage textMessage) {
         try {
             WebSocketMessage message = objectMapper.readValue(textMessage.getPayload(), WebSocketMessage.class);
-            String userName = message.getSender();
             Long roomId = message.getRoomId();
 
             log.info("======================================== origin message INFO");
@@ -53,8 +52,7 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
                     break;
 
                 default:
-                    log.info("======================================== DEFAULT");
-                    log.info("============== 들어온 타입 : " + message.getType());
+                    log.info("Received unknown message type: {}", message.getType());
             }
         } catch (JsonProcessingException e) {
             log.error("JsonProcessingException: {}", e.getMessage());
@@ -90,10 +88,19 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
             if (clientList.size() == 2) {
                 for (Map.Entry<String, WebSocketSession> entry : clientList.entrySet()) {
                     if (!entry.getKey().equals(session.getId())) {
-                        sendMessage(entry.getValue(), message);
+                        try {
+                            sendMessage(entry.getValue(), message);
+                            log.info("Sent {} message to session: {}", message.getType(), entry.getKey());
+                        } catch (Exception e) {
+                            log.error("Failed to send {} message: {}", message.getType(), e.getMessage());
+                        }
                     }
                 }
+            } else {
+                log.warn("Room {} does not have enough clients to send {} message", roomId, message.getType());
             }
+        } else {
+            log.warn("Room {} does not exist", roomId);
         }
     }
 
@@ -110,7 +117,7 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
                 WebSocketMessage.builder()
                         .type(messageType)
                         .sender(userName)
-                        .roomId(roomId) // roomId를 포함하도록 설정
+                        .roomId(roomId)
                         .allUsers(users)
                         .build());
     }
@@ -134,7 +141,7 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
 
     private void sendMessage(WebSocketSession session, WebSocketMessage message) {
         try {
-            if (session.isOpen()) { // WebSocket 세션이 열려있는지 확인
+            if (session.isOpen()) {
                 String json = objectMapper.writeValueAsString(message);
                 log.info("========== 발송 to : " + session.getId());
                 log.info("========== 발송 내용 : " + json);
@@ -143,7 +150,7 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
                 log.warn("WebSocket session is closed: {}", session.getId());
             }
         } catch (IOException e) {
-            log.error("============== 발생한 에러 메세지: " + e.getMessage());
+            log.error("Error sending message: {}", e.getMessage());
         }
     }
 }
