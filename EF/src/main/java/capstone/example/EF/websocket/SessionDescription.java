@@ -10,5 +10,12 @@ import lombok.Setter;
 public class SessionDescription {
     private String type; // "offer" 또는 "answer"
     private String sdp;  // SDP 정보 문자열
+
+    public SessionDescription(){}
+
+    public SessionDescription(String type, String sdp) {
+        this.type = type;
+        this.sdp = sdp;
+    }
 }
 
