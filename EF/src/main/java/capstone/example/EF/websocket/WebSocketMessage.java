@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
-import capstone.example.EF.websocket.IceCandidate;  // 패키지 경로에 따라 수정 필요
+import capstone.example.EF.websocket.IceCandidate;  // IceCandidate import 추가
+
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class WebSocketMessage {
     private Long roomId;
     private String data;
     private List<String> allUsers;
-    private IceCandidate candidate;
+    private IceCandidate candidate;  // IceCandidate import 필요
 
     public WebSocketMessage(String type, String sender, Long roomId, String data, List<String> allUsers, IceCandidate candidate) {
         this.type = type;
