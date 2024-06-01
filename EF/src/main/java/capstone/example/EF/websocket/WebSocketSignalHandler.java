@@ -82,21 +82,15 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
     }
 
     private void handleWebRTCMessage(WebSocketSession session, WebSocketMessage message, Long roomId) {
-        if (sessionRepositoryRepo.hasRoom(roomId)) {
-            Map<String, WebSocketSession> clientList = sessionRepositoryRepo.getClientList(roomId);
-
-            for (Map.Entry<String, WebSocketSession> entry : clientList.entrySet()) {
-                if (!entry.getKey().equals(session.getId())) {
-                    try {
-                        sendMessage(entry.getValue(), message);
-                        log.info("Sent {} message to session: {}", message.getType(), entry.getKey());
-                    } catch (Exception e) {
-                        log.error("Failed to send {} message: {}", message.getType(), e.getMessage());
-                    }
-                }
-            }
-        } else {
+        if (!sessionRepositoryRepo.hasRoom(roomId)) {
             log.warn("Room {} does not exist", roomId);
+            return;
+        }
+        Map<String, WebSocketSession> clientList = sessionRepositoryRepo.getClientList(roomId);
+        for (Map.Entry<String, WebSocketSession> entry : clientList.entrySet()) {
+            if (!entry.getKey().equals(session.getId())) {
+                sendMessage(entry.getValue(), message);
+            }
         }
     }
 
@@ -122,15 +116,12 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(final WebSocketSession session, final CloseStatus status) {
         log.info("웹소켓 연결 해제 : {}", session.getId());
         Long roomId = sessionRepositoryRepo.getRoomId(session);
-
         if (roomId != null) {
             sessionRepositoryRepo.deleteClient(roomId, session);
             sessionRepositoryRepo.deleteRoomIdToSession(session);
-
-            Map<String, WebSocketSession> clientList = sessionRepositoryRepo.getClientList(roomId);
-            if (clientList != null && clientList.isEmpty()) {
+            if (sessionRepositoryRepo.getClientList(roomId).isEmpty()) {
                 sessionRepositoryRepo.removeRoom(roomId);
-            } else if (clientList != null) {
+            } else {
                 notifyOtherUserInRoom(session, roomId, session.getId(), "leave");
             }
         }
@@ -140,11 +131,9 @@ public class WebSocketSignalHandler extends TextWebSocketHandler {
         try {
             if (session.isOpen()) {
                 String json = objectMapper.writeValueAsString(message);
-                log.info("========== 발송 to : " + session.getId());
-                log.info("========== 발송 내용 : " + json);
+                log.info("========== 발송 to : {}", session.getId());
+                log.info("========== 발송 내용 : {}", json);
                 session.sendMessage(new TextMessage(json));
-            } else {
-                log.warn("WebSocket session is closed: {}", session.getId());
             }
         } catch (IOException e) {
             log.error("Error sending message: {}", e.getMessage());
