@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
+import capstone.example.EF.websocket.IceCandidate;  // 패키지 경로에 따라 수정 필요
 
 @Getter
 @Setter

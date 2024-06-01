@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import capstone.example.EF.websocket.WebSocketMessage;  // 패키지 경로에 따라 수정 필요
+
 
 @Getter
 @Setter
