@@ -8,12 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor  // 기본 생성자 추가
 public class IceCandidate {
     private String candidate;
     private String sdpMid;
     private int sdpMLineIndex;
     private String usernameFragment;
+
+    public IceCandidate(){}
 
     public IceCandidate(String candidate, String sdpMid, int sdpMLineIndex, String usernameFragment) {
         this.candidate = candidate;
