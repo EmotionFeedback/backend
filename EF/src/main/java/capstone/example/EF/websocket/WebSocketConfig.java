@@ -22,11 +22,4 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public WebSocketHandler signalHandler() {
         return new WebSocketSignalHandler();
     }
-
-    @Bean
-    public ServletServerContainerFactoryBean createWebSocketContainer() {
-        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-        container.setMaxSessionIdleTimeout(600000L); // 10분 동안 아무 활동이 없으면 세션 종료
-        return container;
-    }
 }
