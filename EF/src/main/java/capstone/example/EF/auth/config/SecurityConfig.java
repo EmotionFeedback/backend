@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .requestMatchers("/member/sign-in", "/member/sign-up").permitAll()
                 .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/live/*/*/save/content", "/live/*/*/save/emotion",
-                        "/live/*/*/all-content", "/live/*/*/all-emotion").permitAll()
+                        "/live/*/*/all-content", "/live/*/*/all-emotion","/").permitAll()
                 .requestMatchers("/signal/**").permitAll()
                 .requestMatchers("/subject/**").permitAll()
                 .anyRequest().authenticated()

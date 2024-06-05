@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -31,6 +32,12 @@ public class SubjectController {
     private final SubjectService subjectService;
     private final MemberService memberService;
     private final LiveService liveService;
+
+    @GetMapping("/")
+    public ResponseEntity healthCheck(){
+        String re = "Okay";
+        return ResponseEntity.ok(re);
+    }
 
     @Operation(description = "프로필 기반 주제추천")
     @GetMapping("/subject/{id}/profile")
