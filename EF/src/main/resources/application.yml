@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://database-emotion-feedback.czyqweykwib4.ap-northeast-2.rds.amazonaws.com:5432/emotionFeedback
-    username: jach1206
-    password: iuoo856963
+    url: ${URL}
+    username: ${USERNAME}
+    password: ${PASSWORD}
 
   web:
     websocket:
@@ -22,6 +22,6 @@ logging.level:
   org.hibernate.type: trace
 
 jwt:
-  secret: 64461f01e1af406da538b9c48d801ce59142452199ff112fb5404c8e7e98e3ff
+  secret: ${JWT}
 
 
