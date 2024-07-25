@@ -1,9 +1,14 @@
 # backend
 
-## 🧑🏻‍💻 Member
+## Member
 |**이준범**|
 |:-----:|
 | [<img src="https://github.com/Tave-13th-Project-Team-4-Fiurinee/.github/blob/main/profile/image/%EC%9D%B4%EC%A4%80%EB%B2%94.jpg" alt="이준범" width="150" height="150"> <br/> @ss7622](https://github.com/ss7622)|
+
+## About Emotion Feedback
+![image](https://github.com/EmotionFeedback/.github/blob/main/imgs/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-06-05%20020154.png)
+
+This project, "Emotion Feedback," aims to recommend conversation topics for video chats based on real-time emotion analysis.
 
 ## Development environment
 
