@@ -25,7 +25,7 @@
 
 
 
-## 💻 Technology
+## Tech Stacks
 #### Framwork - ![spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)&nbsp; 
 
 #### Security - ![springsecurity](https://img.shields.io/badge/springsecurity-6DB33F.svg?style=for-the-badge&logo=springsecurity&logoColor=white)&nbsp; ![jsonwebtokens](https://img.shields.io/badge/jsonwebtokens-000000.svg?style=for-the-badge&logo=jsonwebtokens&logoColor=white)&nbsp;
